@@ -16,6 +16,11 @@ def get_product_by_id(product_id: int):
         raise HTTPException(status_code=404, detail="Product not found")
     return product
 
+@router.get("/products/subcategory/{subcategory_id}", response_model=list[ProductResponse])
+def get_by_subcategory(subcategory_id: int):
+    products = service.get_by_subcategory(subcategory_id)
+    return products
+
 @router.post("/product/save", response_model=ProductResponse)
 def create_product(product: ProductCreate):
     return service.create_product(product)

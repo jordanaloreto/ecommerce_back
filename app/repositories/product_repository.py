@@ -8,6 +8,10 @@ class ProductRepository:
     def get_all(self):
         with database.get_session() as session:
             return session.query(Product).options(joinedload(Product.sub_category).joinedload(SubCategory.categoria)).all()
+        
+    def get_by_subcategory(self, subcategory_id: int):
+        with database.get_session() as session:
+            return session.query(Product).options(joinedload(Product.sub_category).joinedload(SubCategory.categoria)).filter(Product.sub_category_id == subcategory_id).all()
 
     def get_by_id(self, product_id: int):
         with database.get_session() as session:

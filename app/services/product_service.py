@@ -8,6 +8,10 @@ class ProductService:
     # Retorna todos os produtos
     def get_all_products(self):
         return self.repository.get_all()
+    
+     # Retorna produtos pela subcategoria
+    def get_by_subcategory(self, subcategory_id: int):
+        return self.repository.get_by_subcategory(subcategory_id)
 
     # Retorna um produto pelo ID
     def get_product_by_id(self, product_id: int):
