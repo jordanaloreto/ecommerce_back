@@ -51,6 +51,9 @@ class UserService:
     def create_user(self, user: UserCreate):
         return self.repository.create(user)
 
+    def update_user(self, user_id: int, user_data: UserCreate):
+        return self.repository.update(user_id, user_data)   
+
     # Remove uma categoria pelo ID
     def delete_user(self, user_id: int):
         return self.repository.delete(user_id)

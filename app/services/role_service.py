@@ -19,6 +19,9 @@ class RoleService:
     def create_role(self, categoria: RoleCreate):
         return self.repository.create(categoria)
 
+    def update_role(self, role_id: int, role_data: RoleCreate):
+        return self.repository.update(role_id, role_data)
+
     # Remove um produto pelo ID
     def delete_role(self, role_id: int):
         return self.repository.delete(role_id)

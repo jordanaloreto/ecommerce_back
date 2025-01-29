@@ -21,6 +21,13 @@ def get_role_by_id(role_id: int):
 def create_role(role: RoleCreate):
     return service.create_role(role)
 
+@router.put("/role/{role_id}", response_model=RoleResponse)
+def update_role(role_id: int, role: RoleCreate):
+    updated_role = service.update_role(role_id, role)
+    if not updated_role:
+        raise HTTPException(status_code=404, detail="Role not found")
+    return updated_role
+
 @router.delete("/role/{role_id}")
 def delete_role(role_id: int):
     deleted = service.delete_role(role_id)

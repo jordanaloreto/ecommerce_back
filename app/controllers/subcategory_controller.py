@@ -22,6 +22,13 @@ def get_subcategory_by_id(subcategory_id: int):
 def create_subcategory(subcategory_data: SubCategoryCreate):
     return service.create_subcategory(subcategory_data)
 
+@router.put("/subcategories/{subcategory_id}", response_model=SubCategoryResponse)
+def update_subcategory(subcategory_id: int, subcategory_data: SubCategoryCreate):
+    updated_subcategory = service.update_subcategory(subcategory_id, subcategory_data)
+    if not updated_subcategory:
+        raise HTTPException(status_code=404, detail="SubCategory not found")
+    return updated_subcategory
+
 @router.delete("/subcategories/{subcategory_id}")
 def delete_subcategory(subcategory_id: int):
     deleted = service.delete_subcategory(subcategory_id)

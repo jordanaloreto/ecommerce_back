@@ -20,6 +20,17 @@ class CategoriaRepository:
             session.commit()
             session.refresh(db_categoria)
             return db_categoria
+        
+    def update(self, categoria_id: int, categoria_data: CategoriaCreate):
+        with database.get_session() as session:
+            categoria = session.query(Categoria).filter(Categoria.id == categoria_id).first()
+            if not categoria:
+                return None
+            categoria.name = categoria_data.name  # Atualiza o nome
+            session.commit()
+            session.refresh(categoria)
+            return categoria
+
 
     def delete(self, categoria_id: int):
         with database.get_session() as session:

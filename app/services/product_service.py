@@ -20,7 +20,9 @@ class ProductService:
     # Cria um novo produto
     def create_product(self, product: ProductCreate):
         return self.repository.create(product)
-
+    
+    def update_product(self, product_id: int, product_data: ProductCreate):
+        return self.repository.update(product_id, product_data)
     # Remove um produto pelo ID
     def delete_product(self, product_id: int):
         return self.repository.delete(product_id)

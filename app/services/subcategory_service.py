@@ -16,6 +16,9 @@ class SubCategoryService:
     def create_subcategory(self, subcategory_data: SubCategoryCreate) -> SubCategoryResponse:
         return self.repository.create(subcategory_data)
     
+    def update_subcategory(self, subcategory_id: int, subcategory_data: SubCategoryCreate):
+        return self.repository.update(subcategory_id, subcategory_data)
+
      # Remove um produto pelo ID
     def delete_subcategory(self, subcategory_id: int):
         return self.repository.delete(subcategory_id)

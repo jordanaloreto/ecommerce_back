@@ -25,6 +25,14 @@ def get_by_subcategory(subcategory_id: int):
 def create_product(product: ProductCreate):
     return service.create_product(product)
 
+@router.put("/product/{product_id}", response_model=ProductResponse)
+def update_product(product_id: int, product_data: ProductCreate):
+    updated_product = service.update_product(product_id, product_data)
+    if not updated_product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return updated_product
+
+
 @router.delete("/product/{product_id}")
 def delete_product(product_id: int):
     deleted = service.delete_product(product_id)

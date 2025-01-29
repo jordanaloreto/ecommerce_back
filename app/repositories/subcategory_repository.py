@@ -29,7 +29,30 @@ class SubCategoryRepository:
             db_subcategory.categoria = db_categoria  # Atribui a categoria ao objeto da subcategoria
 
             return db_subcategory
-        
+
+    from sqlalchemy.orm import joinedload
+
+    def update(self, subcategory_id: int, subcategory_data: SubCategoryCreate):
+        with database.get_session() as session:
+            # Busca a subcategoria pelo ID e carrega a categoria associada
+            subcategory = session.query(SubCategory).options(joinedload(SubCategory.categoria)).filter(SubCategory.id == subcategory_id).first()
+            if not subcategory:
+                return None
+
+            # Verifica se a categoria_id fornecida existe
+            categoria = session.query(Categoria).filter(Categoria.id == subcategory_data.categoria_id).first()
+            if not categoria:
+                raise ValueError("Categoria não encontrada")
+
+            # Atualiza os campos da subcategoria
+            subcategory.name = subcategory_data.name
+            subcategory.categoria_id = subcategory_data.categoria_id
+
+            session.commit()
+            session.refresh(subcategory)
+
+            return subcategory
+
     def delete(self, subcategory_id: int):
         with database.get_session() as session:
             subcategory = session.query(SubCategory).filter(SubCategory.id == subcategory_id).first()

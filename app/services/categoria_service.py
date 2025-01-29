@@ -17,6 +17,9 @@ class CategoriaService:
     def create_categoria(self, categoria: CategoriaCreate):
         return self.repository.create(categoria)
 
+    def update_categoria(self, categoria_id: int, categoria_data: CategoriaCreate):
+        return self.repository.update(categoria_id, categoria_data)
+
     # Remove um produto pelo ID
     def delete_categoria(self, categoria_id: int):
         return self.repository.delete(categoria_id)

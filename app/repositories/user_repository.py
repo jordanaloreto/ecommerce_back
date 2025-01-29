@@ -35,6 +35,23 @@ class UserRepository:
 
             return db_user
         
+    def update(self, user_id: int, user_data: UserCreate):
+        with database.get_session() as session:
+            # Busca o usuário pelo ID e carrega a role associada
+            user = session.query(User).options(joinedload(User.role)).filter(User.id == user_id).first()
+            if not user:
+                return None  # Retorna None se o usuário não for encontrado
+
+            # Atualiza os campos do usuário
+            user.user_name = user_data.user_name
+            user.password = user_data.password
+            user.role_id = user_data.role_id
+
+            session.commit()  # Confirma a transação
+            session.refresh(user)  # Atualiza o objeto com os dados mais recentes do banco
+
+            return user  # Retorna o usuário atualizado
+
     def delete(self, user_id: int):
         with database.get_session() as session:
             user = session.query(User).filter(User.id == user_id).first()

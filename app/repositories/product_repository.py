@@ -31,6 +31,22 @@ class ProductRepository:
             db_product = session.query(Product).options(joinedload(Product.sub_category).joinedload(SubCategory.categoria)).filter(Product.id == db_product.id).first()
 
             return db_product
+    
+    def update(self, product_id: int, product_data: ProductCreate):
+        with database.get_session() as session:
+            product = session.query(Product).filter(Product.id == product_id).first()
+            if not product:
+                return None  # Retorna None caso o produto não seja encontrado
+            
+            # Atualiza os campos
+            product.name = product_data.name
+            product.price = product_data.price
+            product.sub_category_id = product_data.sub_category_id
+
+            session.commit()
+            session.refresh(product)
+
+            return session.query(Product).options(joinedload(Product.sub_category).joinedload(SubCategory.categoria)).filter(Product.id == product.id).first()
 
     def delete(self, product_id: int):
         with database.get_session() as session:

@@ -23,6 +23,13 @@ def get_user_by_id(user_id: int):
 def create_user(user_data: UserCreate):
     return service.create_user(user_data)
 
+@router.put("/users/{user_id}", response_model=UserResponse)
+def update_user(user_id: int, user_data: UserCreate):
+    updated_user = service.update_user(user_id, user_data)
+    if not updated_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return updated_user
+
 @router.delete("/users/{user_id}")
 def delete_user(user_id: int):
     deleted = service.delete_user(user_id)

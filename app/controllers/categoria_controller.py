@@ -20,6 +20,14 @@ def get_categoria_by_id(categoria_id: int):
 def create_categoria(categoria: CategoriaCreate):
     return service.create_categoria(categoria)
 
+# Endpoint para atualizar uma categoria
+@router.put("/categoria/{categoria_id}", response_model=CategoriaResponse)
+def update_categoria(categoria_id: int, categoria: CategoriaCreate):
+    updated_categoria = service.update_categoria(categoria_id, categoria)
+    if not updated_categoria:
+        raise HTTPException(status_code=404, detail="Categoria not found")
+    return updated_categoria
+
 @router.delete("/categoria/{categoria_id}")
 def delete_categoria(categoria_id: int):
     deleted = service.delete_categoria(categoria_id)

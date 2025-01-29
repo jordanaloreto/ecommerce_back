@@ -22,6 +22,21 @@ class RoleRepository:
             session.refresh(db_role)
             return db_role
 
+    def update(self, role_id: int, role_data: RoleCreate):
+        with database.get_session() as session:
+            # Busca a role pelo ID
+            role = session.query(Role).filter(Role.id == role_id).first()
+            if not role:
+                return None  # Retorna None se a role não for encontrada
+
+            # Atualiza o nome da role
+            role.name = role_data.name
+
+            session.commit()  # Confirma a transação
+            session.refresh(role)  # Atualiza o objeto com os dados mais recentes do banco
+
+            return role  # Retorna a role atualizada
+
     def delete(self, role_id: int):
         with database.get_session() as session:
             role = session.query(Role).filter(Role.id == role_id).first()
