@@ -11,7 +11,8 @@ class UserRepository:
 
     def get_by_id(self, user_id: int):
         with database.get_session() as session:
-            return session.query(User).filter(User.id == user_id).first()
+            return session.query(User).options(joinedload(User.role)).filter(User.id == user_id).first()
+
     
     def get_by_user_name(self, user_name: int):
         with database.get_session() as session:
@@ -29,9 +30,7 @@ class UserRepository:
             session.commit()
             session.refresh(db_user)
 
-            # Busca a role correspondente e retorna junto com a subcategoria
-            db_role = session.query(Role).filter(Role.id == db_user.role_id).first()
-            db_user.role = db_role  # Atribui a role ao objeto da subcategoria
+            db_user = session.query(User).options(joinedload(User.role)).filter(User.id == db_user.id).first()
 
             return db_user
         

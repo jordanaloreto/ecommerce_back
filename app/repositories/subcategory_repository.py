@@ -11,7 +11,7 @@ class SubCategoryRepository:
 
     def get_by_id(self, subcategory_id: int):
         with database.get_session() as session:
-            return session.query(SubCategory).filter(SubCategory.id == subcategory_id).first()
+            return session.query(SubCategory).options(joinedload(SubCategory.categoria)).filter(SubCategory.id == subcategory_id).first()
 
     def create(self, subcategory_data: SubCategoryCreate):
         with database.get_session() as session:

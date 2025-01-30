@@ -13,7 +13,7 @@ class SubCategory(Base):
     categoria_id = Column(Integer, ForeignKey("categorias.id"))
 
     # Relacionamento de volta para Category
-    categoria = relationship("Categoria")
+    categoria = relationship("Categoria", lazy="joined")
 
 
 class SubCategoryBase(BaseModel):
@@ -27,5 +27,5 @@ class SubCategoryCreate(SubCategoryBase):
 
 class SubCategoryResponse(SubCategoryBase):
     id: int
-    categoria: "CategoriaResponse"
+    categoria: CategoriaResponse | None
 

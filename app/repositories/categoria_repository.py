@@ -9,9 +9,9 @@ class CategoriaRepository:
         with database.get_session() as session:
             return session.query(Categoria).all()
 
-    def get_by_id(self, categoria_id: int):
+    def get_by_id(self, category_id: int):
         with database.get_session() as session:
-            return session.query(Categoria).options(joinedload(Categoria.subcategories)).filter(Categoria.id == categoria_id).first()
+            return session.query(Categoria).filter(Categoria.id == category_id).first()
 
     def create(self, categoria_data: CategoriaCreate):
         with database.get_session() as session:

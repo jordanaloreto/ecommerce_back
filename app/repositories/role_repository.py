@@ -12,8 +12,8 @@ class RoleRepository:
 
     def get_by_id(self, role_id: int):
         with database.get_session() as session:
-            return session.query(Role).options(joinedload(Role.users)).filter(Role.id == role_id).first()
-
+            return session.query(Role).filter(Role.id == role_id).first()
+        
     def create(self, role_data: RoleCreate):
         with database.get_session() as session:
             db_role = Role(name=role_data.name)

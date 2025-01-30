@@ -15,7 +15,7 @@ class ProductRepository:
 
     def get_by_id(self, product_id: int):
         with database.get_session() as session:
-            return session.query(Product).filter(Product.id == product_id).first()
+            return session.query(Product).options(joinedload(Product.sub_category)).filter(Product.id == product_id).first()
 
     def create(self, product_data: ProductCreate):
         with database.get_session() as session:
@@ -28,7 +28,7 @@ class ProductRepository:
             session.commit()
             session.refresh(db_product)
 
-            db_product = session.query(Product).options(joinedload(Product.sub_category).joinedload(SubCategory.categoria)).filter(Product.id == db_product.id).first()
+            db_product = session.query(Product).options(joinedload(Product.sub_category)).filter(Product.id == db_product.id).first()
 
             return db_product
     

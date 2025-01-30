@@ -14,7 +14,7 @@ class User(Base):
     role_id = Column(Integer, ForeignKey("roles.id"))
 
     # Relacionamento de volta para Category
-    role = relationship("Role")
+    role = relationship("Role", lazy="joined")
 
 
 class UserBase(BaseModel):
