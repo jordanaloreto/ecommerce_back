@@ -12,8 +12,7 @@ class Role(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
- # Relacionamento um-para-muitos com SubCategory
-    # subcategories = relationship("SubCategory", back_populates="category")
+ 
 # Definindo a estrutura básica de um produto
 class RoleBase(BaseModel):
     name: str # Nome do produto

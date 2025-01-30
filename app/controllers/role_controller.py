@@ -13,7 +13,7 @@ def get_all_roles():
 @router.get("/role/{role_id}", response_model=RoleResponse)
 def get_role_by_id(role_id: int):
     role = service.get_role_by_id(role_id)
-    if not role:
+    if role is None:
         raise HTTPException(status_code=404, detail="Role not found")
     return role
 
