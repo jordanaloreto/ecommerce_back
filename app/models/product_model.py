@@ -16,7 +16,8 @@ class Product(Base):
     sub_category_id = Column(Integer, ForeignKey("subcategories.id"))  # Chave estrangeira para SubCategory
     sub_category = relationship("SubCategory", lazy="joined")
     questions = relationship("Question", back_populates="product", lazy="joined")
-
+    average_rating = Column(Float, default=0.0)  
+    reviews = relationship("Review", back_populates="product", cascade="all, delete-orphan")
 # Definição dos schemas Pydantic
 class ProductBase(BaseModel):
     name: str

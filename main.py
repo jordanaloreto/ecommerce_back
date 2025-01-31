@@ -8,6 +8,7 @@ from app.controllers.user_controller import router as user_router
 from app.controllers.order_controller import router as order_router
 from app.controllers.cart_controller import router as cart_router
 from app.controllers.question_controller import router as question_router
+from app.controllers.review_controller import router as review_router
 from app.connection.database import Base, database
 
 import uvicorn
@@ -25,6 +26,7 @@ app.include_router(user_router)
 app.include_router(order_router)
 app.include_router(cart_router)
 app.include_router(question_router)
+app.include_router(review_router)
 Base.metadata.create_all(bind=database.engine)  # Criar tabelas no banco de dados
 app.add_middleware(JWTMiddleware)
 
